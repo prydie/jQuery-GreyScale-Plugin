@@ -59,7 +59,7 @@
           'display' : 'inline-block'
         });
         if (window.location.hostname !== this.src.split('/')[2]) {
-          // if the image is on a different url proxy the request
+          // If the image is on a different domain proxy the request
          $.getImageData({
             url: $(this).attr('src'),
             success: $.proxy(function(image) {
@@ -70,7 +70,7 @@
               // silently fail on error
             }
           });
-        } else { // if the url isn't local don't proxy the request
+        } else { // If the image is on the same domain don't proxy the request
           can = greyScale($(this)[0], $(this).width(), $(this).height());
           can.appendTo(gsWrapper).fadeIn($options.fadeTime);
         }
