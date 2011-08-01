@@ -1,0 +1,7 @@
+A jQuery plugin for greyscaleing images on the fly and then colouring them on hover.
+
+See example.html for a usage.
+
+Tested in IE6-9, Safari, Chrome and FireFox.
+
+Please send bug reports and feature requests to andrew@pryde-design.co.uk
