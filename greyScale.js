@@ -58,14 +58,13 @@
           'position' : 'relative',
           'display' : 'inline-block'
         });
-        console.log();
         if (window.location.hostname !== this.src.split('/')[2]) {
           // if the image is on a different url proxy the request
          $.getImageData({
             url: $(this).attr('src'),
             success: $.proxy(function(image) {
                 can = greyScale(image, image.width, image.height);
-                can.appendTo(gsWrapper).fadeIn($options.fadeTime);
+                can.appendTo(this).fadeIn($options.fadeTime);
               }, gsWrapper),
             error: function(xhr, text_status){
               // silently fail on error
