@@ -1,5 +1,5 @@
 /*
- *  jQuery $.greyScale Plugin 0.1
+ *  jQuery $.greyScale Plugin v0.2
  *  Written by Andrew Pryde (www.pryde-design.co.uk)
  *  Date: Mon 1 Aug 2011
  *  Licence: MIT Licence
@@ -25,7 +25,8 @@
 
   $.fn.greyScale = function(args) {
     $options = $.extend({
-      fadeTime: 400
+      fadeTime: 400,
+      reverse: false
     }, args);
     function greyScale(image, width, height) {
       can = $('<canvas>')
@@ -94,8 +95,13 @@
     });
 
     $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
-      (event.type == 'mouseover') && $(this).stop().animate({'opacity': '0'}, $options.fadeTime);
-      (event.type == 'mouseout') && $(this).stop().animate({'opacity': '1'}, $options.fadeTime);
+      if ($options.reverse) {
+        (event.type == 'mouseover') && $(this).stop().animate({'opacity': '1'}, $options.fadeTime);
+        (event.type == 'mouseout') && $(this).stop().animate({'opacity': '0'}, $options.fadeTime); 
+      } else {
+        (event.type == 'mouseover') && $(this).stop().animate({'opacity': '0'}, $options.fadeTime);
+        (event.type == 'mouseout') && $(this).stop().animate({'opacity': '1'}, $options.fadeTime); 
+      }
     });
   }
   };
