@@ -82,7 +82,8 @@
             url: $(this).attr('src'),
             success: $.proxy(function(image) {
                 can = greyScale(image, image.width, image.height);
-                can.appendTo(this).fadeIn($options.fadeTime);
+                if ($options.reverse) { can.appendTo(gsWrapper); }
+                else { can.appendTo(gsWrapper).fadeIn($options.fadeTime); }
               }, gsWrapper),
             error: function(xhr, text_status){
               // silently fail on error
@@ -90,7 +91,8 @@
           });
         } else { // If the image is on the same domain don't proxy the request
           can = greyScale($(this)[0], $(this).width(), $(this).height());
-          can.appendTo(gsWrapper).fadeIn($options.fadeTime);
+          if ($options.reverse) { can.appendTo(gsWrapper); }
+          else { can.appendTo(gsWrapper).fadeIn($options.fadeTime); }
         }
     });
 
