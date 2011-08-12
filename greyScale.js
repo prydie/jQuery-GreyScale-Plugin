@@ -56,16 +56,19 @@
     if ($.browser.msie) {
       // IE doesn't support Canvas so use it's horrible filter syntax instead
       this.each(function(){
+        var greyscale = $options.reverse ? 0 : 1;
         $(this).css({
-          'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)',
+          'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')',
           'zoom': '1'
         });
         $(this).hover(function() {
+          var greyscale = $options.reverse ? 1 : 0;
           $(this).css({
-            'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=0)'
+            'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')'
           });
         }, function() {
-          $(this).css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)');
+          var greyscale = $options.reverse ? 0 : 1;
+          $(this).css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')');
         });
       });
     } else {
