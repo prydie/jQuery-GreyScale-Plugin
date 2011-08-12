@@ -25,7 +25,7 @@
 
   $.fn.greyScale = function(args) {
     $options = $.extend({
-      fadeTime: 400,
+      fadeTime: $.fx.speeds._default,
       reverse: false
     }, args);
     function greyScale(image, width, height) {
