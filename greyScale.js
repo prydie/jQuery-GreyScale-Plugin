@@ -91,7 +91,7 @@
           });
         } else { // If the image is on the same domain don't proxy the request
           can = greyScale($(this)[0], $(this).width(), $(this).height());
-          if ($options.reverse) { can.appendTo(gsWrapper); }
+          if ($options.reverse) { can.appendTo(gsWrapper).css({"display" : "block", "opacity" : "0"}); }
           else { can.appendTo(gsWrapper).fadeIn($options.fadeTime); }
         }
     });
