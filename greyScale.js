@@ -100,13 +100,10 @@
     });
 
     $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
-      if ($options.reverse) {
-        (event.type == 'mouseover') && $(this).stop().animate({'opacity': '1'}, $options.fadeTime);
-        (event.type == 'mouseout') && $(this).stop().animate({'opacity': '0'}, $options.fadeTime); 
-      } else {
-        (event.type == 'mouseover') && $(this).stop().animate({'opacity': '0'}, $options.fadeTime);
-        (event.type == 'mouseout') && $(this).stop().animate({'opacity': '1'}, $options.fadeTime); 
-      }
+      over = $options.reverse ? 1 : 0;
+      out = $options.reverse ? 0 : 1;
+      (event.type == 'mouseover') && $(this).stop().animate({'opacity': over}, $options.fadeTime);
+      (event.type == 'mouseout') && $(this).stop().animate({'opacity': out}, $options.fadeTime); 
     });
   }
   };
