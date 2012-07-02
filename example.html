@@ -3,15 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>jQuery GreyScale Plugin</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="greyScale.js"></script>
+
+    <style>
+      a {
+        display: block;
+        text-align: center;
+      }
+    </style>
   </head>
-  <style>
-    a {
-      display: block;
-      text-align: center;
-    }
-  </style>
   <body>
     <a href="image.png">
       <img src="image.jpg" alt="Image" class="greyScale" />
@@ -26,10 +27,14 @@
       });
       // user window.load to ensure images have been loaded
       $(window).load(function () {
-        $('.greyScale').greyScale({
-          // call the plugin with non-defult fadeTime (default: 400ms)
-          fadeTime: 500,
-          reverse: false
+        $('.greyScale').greyScale({ hide : false });
+        $('.gsCanvas').show();
+
+        $('body').on('mouseover mouseout', '.gsCanvas', function(event) {
+          (event.type == 'mouseover') && $(this).stop().animate({'opacity': 0},
+          500);
+          (event.type == 'mouseout') && $(this).stop().animate({'opacity': 1},
+          500);
         });
       });
     </script>
