@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>jQuery GreyScale Plugin</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     <script src="greyScale.js"></script>
   </head>
   <style>
@@ -28,11 +28,9 @@
       $(window).load(function () {
         $('.greyScale').greyScale({
           // call the plugin with non-defult fadeTime (default: 400ms)
-          hover: false,
           fadeTime: 500,
           reverse: false
         });
-        $.delay(2000).greyScale.saturate();
       });
     </script>
   </body>
