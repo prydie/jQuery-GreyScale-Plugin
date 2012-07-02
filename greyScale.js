@@ -21,38 +21,15 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-(function($){
+(function($) {
 
   $.fn.greyScale = function(args) {
     $options = $.extend({
+      hover: true,
       fadeTime: $.fx.speeds._default,
-      reverse: false
+      reverse: false,
+      server: "http://img-to-json.appspot.com/"
     }, args);
-    function greyScale(image, width, height) {
-      can = $('<canvas>')
-        .css({
-          'display' : 'none',
-          'left' : '0',
-          'position' : 'absolute',
-          'top' : '0'
-        })
-        .attr({
-          'width': width,
-          'height': height
-        })
-        .addClass('gsCanvas');
-      ctx = can[0].getContext('2d');
-      ctx.drawImage(image, 0, 0, width, height);
-
-      imageData = ctx.getImageData(0, 0,  width, height);
-      px = imageData.data;
-      for (i = 0; i < px.length; i+= 4) {
-        grey = px[i] * .3 + px[i+1] * .59 + px[i+2] * .11;
-        px[i] = px[i+1] = px[i+2] = grey;
-      }
-      ctx.putImageData(imageData, 0, 0);
-      return can;
-    }
     if ($.browser.msie) {
       // IE doesn't support Canvas so use it's horrible filter syntax instead
       this.each(function(){
@@ -60,18 +37,20 @@
         $(this).css({
           'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')',
           'zoom': '1'
-        });
-        $(this).hover(function() {
-          var greyscale = $options.reverse ? 1 : 0;
-          $(this).css({
-            'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')'
+        }).addClass('.gsFilter');
+        if ($options.hover) {
+          $(this).hover(function() {
+            var greyscale = $options.reverse ? 1 : 0;
+            $(this).css({
+              'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')'
+            });
+          }, function() {
+            var greyscale = $options.reverse ? 0 : 1;
+            $(this).css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')');
           });
-        }, function() {
-          var greyscale = $options.reverse ? 0 : 1;
-          $(this).css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=' + greyscale + ')');
-        });
+        }
       });
-    } else {
+    } else if (!!document.createElement('canvas').getContext) {
       this.each(function(index) {
         $(this).wrap('<div class="gsWrapper">');
         gsWrapper = $(this).parent();
@@ -83,8 +62,9 @@
           // If the image is on a different domain proxy the request
          $.getImageData({
             url: $(this).attr('src'),
+            server: $options.server,
             success: $.proxy(function(image) {
-                can = greyScale(image, image.width, image.height);
+                can = $.fn.greyScale.returnCanvas(image, image.width, image.height);
                 if ($options.reverse) { can.appendTo(gsWrapper).css({"display" : "block", "opacity" : "0"}); }
                 else { can.appendTo(gsWrapper).fadeIn($options.fadeTime); }
               }, gsWrapper),
@@ -93,20 +73,60 @@
             }
           });
         } else { // If the image is on the same domain don't proxy the request
-          can = greyScale($(this)[0], $(this).width(), $(this).height());
+          can = $.fn.greyScale.returnCanvas($(this)[0], $(this).width(), $(this).height());
           if ($options.reverse) { can.appendTo(gsWrapper).css({"display" : "block", "opacity" : "0"}); }
           else { can.appendTo(gsWrapper).fadeIn($options.fadeTime); }
         }
     });
-
-    $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
-      over = $options.reverse ? 1 : 0;
-      out = $options.reverse ? 0 : 1;
-      (event.type == 'mouseover') && $(this).stop().animate({'opacity': over}, $options.fadeTime);
-      (event.type == 'mouseout') && $(this).stop().animate({'opacity': out}, $options.fadeTime); 
-    });
+    if ($options.hover) {
+      $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
+        over = $options.reverse ? 1 : 0;
+        out = $options.reverse ? 0 : 1;
+        (event.type == 'mouseover') && $(this).stop().animate({'opacity': over}, $options.fadeTime);
+        (event.type == 'mouseout') && $(this).stop().animate({'opacity': out}, $options.fadeTime); 
+      });
+    }
+  } else {
+    // do nothing no way of greyscaling
   }
   };
+  $.fn.greyScale.returnCanvas = function(image, width, height) {
+    if (!!document.createElement('canvas').getContext) { 
+      $can = $('<canvas>')
+        .css({
+          'display' : 'none',
+          'left' : '0',
+          'position' : 'absolute',
+          'top' : '0'
+        })
+        .attr({
+          'width': width,
+          'height': height
+        })
+        .addClass('gsCanvas');
+      ctx = $can[0].getContext('2d');
+      ctx.drawImage(image, 0, 0, width, height);
+
+      imageData = ctx.getImageData(0, 0,  width, height);
+      px = imageData.data;
+      for (i = 0; i < px.length; i+= 4) {
+        grey = px[i] * .3 + px[i+1] * .59 + px[i+2] * .11;
+        px[i] = px[i+1] = px[i+2] = grey;
+      }
+      ctx.putImageData(imageData, 0, 0);
+      return $can;
+    }
+    else {
+      return null;
+    }
+  }
+  $.fn.greyScale.saturate = function() {
+    if (!!document.createElement('canvas').getContext) {
+      $('.gsCanvas').css('opacity', '0');
+    } else if ($.browser.msie) {
+      $('.gsFilter').css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=0)');
+    }
+  }
 })( jQuery );
 
 /*
