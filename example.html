@@ -5,13 +5,13 @@
     <title>jQuery GreyScale Plugin</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="greyScale.js"></script>
+    <style>
+      a {
+        display: block;
+        text-align: center;
+      }
+    </style>
   </head>
-  <style>
-    a {
-      display: block;
-      text-align: center;
-    }
-  </style>
   <body>
     <a href="image.png">
       <img src="image.jpg" alt="Image" class="greyScale" />
@@ -32,7 +32,7 @@
           fadeTime: 500,
           reverse: false
         });
-        $.delay(2000).greyScale.saturate();
+        // $.delay(2000).greyScale.saturate();
       });
     </script>
   </body>
