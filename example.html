@@ -7,34 +7,41 @@
     <script src="greyScale.js"></script>
 
     <style>
-      a {
-        display: block;
+      .wrapper {
+        width: 400px;
+        margin: 0 auto;
         text-align: center;
       }
     </style>
   </head>
   <body>
-    <a href="image.png">
-      <img src="image.jpg" alt="Image" class="greyScale" />
-    </a>
-    <a href="http://www.pryde-design.co.uk">
-      <img src="http://www.pryde-design.co.uk/pd-header.png" alt="Image" class="greyScale" />
-    </a>
+    <div class="wrapper">
+      <a href="image.png">
+        <img src="image.jpg" alt="Image" class="greyScale" />
+      </a>
+      <a href="http://www.pryde-design.co.uk">
+        <img src="http://www.pryde-design.co.uk/pd-header.png" alt="Image" class="greyScale" />
+      </a>
+    </div>
     <script>
       $(function() {
-        // fade in the grayscaled images to avoid visual jump
+        // fade in images to be greyscaled to avoid visual jump
         $('.greyScale').hide().fadeIn(1000);
       });
+
       // user window.load to ensure images have been loaded
       $(window).load(function () {
-        $('.greyScale').greyScale({ hide : false });
-        $('.gsCanvas').show();
+        $('.greyScale').greyScale({
+          hide : false,
+          opacity : 1
+        });
 
-        $('body').on('mouseover mouseout', '.gsCanvas', function(event) {
-          (event.type == 'mouseover') && $(this).stop().animate({'opacity': 0},
-          500);
-          (event.type == 'mouseout') && $(this).stop().animate({'opacity': 1},
-          500);
+        // use .on() to attach events because images on other servers are grey-scaled asynchronously
+        $('body').on('mouseover mouseout', '.gsWrapper > canvas', function(event) {
+          if (event.type == 'mouseover')
+            $(this).stop().animate({'opacity': 0}, 500);
+          if (event.type == 'mouseout')
+            $(this).stop().animate({'opacity': 1}, 500);
         });
       });
     </script>
