@@ -69,6 +69,11 @@
     return $ret;
   };
 
+  /**
+   * Wraps an image in a <div> and inserts a grey-scale version of that image
+   * into the same <div>. Handles cross-origin requests.
+   * @param  {array} args  jQuery arguments array
+   */
   $.fn.greyScale = function(args) {
     $options = $.extend({
       hide : false,
@@ -90,15 +95,15 @@
        $.getImageData({
           url: $this.attr('src'),
           success: $.proxy(function(image) {
-              $can = $(image).getGSCanvas();
+            $can = $(image).getGSCanvas();
 
-              $can.css({
-                'opacity' : $options.opacity,
-                'display' : ($options.hide) ? 'none' : 'block'
-              });
+            $can.css({
+              'opacity' : $options.opacity,
+              'display' : ($options.hide) ? 'none' : 'block'
+            });
 
-              $can.appendTo($gsWrapper);
-            }, $gsWrapper),
+            $can.appendTo($gsWrapper);
+          }, $gsWrapper),
           error: function(xhr, text_status) {
             // do nothing
           }
@@ -113,15 +118,7 @@
 
         $can.appendTo($gsWrapper);
       }
-
-  });
-
-    /*
-     * $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
-     *   (event.type == 'mouseover') && $(this).stop().animate({'opacity': 0}, $options.fadeTime);
-     *   (event.type == 'mouseout') && $(this).stop().animate({'opacity': 1}, $options.fadeTime);
-     * });
-     */
+    });
   };
 })( jQuery );
 
