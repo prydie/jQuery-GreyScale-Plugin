@@ -32,7 +32,6 @@
       throw "<canvas> not supported";
 
     $ret = $();
-    list = [];
     this.each(function(index) {
       $this = $(this);
 
