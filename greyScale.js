@@ -49,79 +49,41 @@
       px = imageData.data;
 
       for (i = 0; i < px.length; i+= 4) {
-        grey = px[i] * .3 + px[i+1] * .59 + px[i+2] * .11;
+        grey = px[i] * 0.3 + px[i+1] * 0.59 + px[i+2] * 0.11;
         px[i] = px[i+1] = px[i+2] = grey;
       }
       ctx.putImageData(imageData, 0, 0);
       return $can;
     }
 
-    if ($.browser.msie) {
-      // IE doesn't support Canvas so use it's horrible filter syntax instead
-      this.each(function() {
-        $this = $(this);
-        $this.wrap('<div class="gsWrapper">');
+    this.each(function(index) {
+      $this = $(this);
+      $this.wrap('<div class="gsWrapper">');
 
-        $gsWrapper = $this.parent();
-        $gsWrapper.css({
-          'position' : 'relative',
-          'display' : 'inline-block'
-        });
-
-        $newImage = $this.clone();
-
-        $newImage
-          .css({
-            'display' : 'none',
-            'left' : '0',
-            'position' : 'absolute',
-            'top' : '0'
-          })
-          .addClass('gsCanvas')
-          .appendTo($gsWrapper);
-
-        $newImage.css({
-          'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)',
-          'zoom': '1'
-        });
-
-        $newImage.hover(function() {
-          $newImage.css({
-            'filter': 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=0)'
-          });
-        }, function() {
-          $newImage.css('filter', 'progid:DXImageTransform.Microsoft.BasicImage(grayscale=1)');
-        });
+      $gsWrapper = $this.parent();
+      $gsWrapper.css({
+        'position' : 'relative',
+        'display' : 'inline-block'
       });
-    } else {
-      this.each(function(index) {
-        $this = $(this);
-        $this.wrap('<div class="gsWrapper">');
 
-        $gsWrapper = $this.parent();
-        $gsWrapper.css({
-          'position' : 'relative',
-          'display' : 'inline-block'
+      if (window.location.hostname !== this.src.split('/')[2]) {
+        // If the image is on a different domain proxy the request
+       $.getImageData({
+          url: $this.attr('src'),
+          success: $.proxy(function(image) {
+              $can = greyScale(image, image.width, image.height);
+              $can.appendTo($gsWrapper);
+            }, $gsWrapper),
+          error: function(xhr, text_status) {
+            // do nothing
+          }
         });
+      } else {
+        $can = greyScale($(this)[0], $(this).width(), $(this).height());
+        $can.appendTo($gsWrapper);
+      }
 
-        if (window.location.hostname !== this.src.split('/')[2]) {
-          // If the image is on a different domain proxy the request
-         $.getImageData({
-            url: $this.attr('src'),
-            success: $.proxy(function(image) {
-                $can = greyScale(image, image.width, image.height);
-                $can.appendTo($gsWrapper);
-              }, $gsWrapper),
-            error: function(xhr, text_status) {
-              // do nothing
-            }
-          });
-        } else {
-          $can = greyScale($(this)[0], $(this).width(), $(this).height());
-          $can.appendTo($gsWrapper);
-        }
-
-    });
+  });
 
     /*
      * $(this).parent().delegate('.gsCanvas', 'mouseover mouseout', function(event) {
@@ -129,7 +91,6 @@
      *   (event.type == 'mouseout') && $(this).stop().animate({'opacity': 1}, $options.fadeTime);
      * });
      */
-  }
   };
 })( jQuery );
 
