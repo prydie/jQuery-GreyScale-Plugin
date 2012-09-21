@@ -27,6 +27,10 @@
    * Returns <canvas> elements containing greyscale version of images in the selector
    */
   $.fn.getGSCanvas = function() {
+    var canvasSupported = !!document.createElement("canvas").getContext;
+    if (!canvasSupported)
+      throw "<canvas> not supported";
+
     $ret = $();
     list = [];
     this.each(function(index) {
@@ -75,6 +79,10 @@
    * @param  {array} args  jQuery arguments array
    */
   $.fn.greyScale = function(args) {
+    var canvasSupported = !!document.createElement("canvas").getContext;
+    if (!canvasSupported)
+      throw "<canvas> not supported";
+
     $options = $.extend({
       hide : false,
       opacity : 1
