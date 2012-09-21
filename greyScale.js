@@ -32,7 +32,7 @@
     this.each(function(index) {
       $this = $(this);
 
-      if (! $this.is('img'))
+      if (!$this.is('img'))
         return true;
 
       var width = $this.width();
@@ -65,12 +65,14 @@
       list += $can;
       $ret = $ret.add($can);
     });
+
     return $ret;
   };
 
   $.fn.greyScale = function(args) {
     $options = $.extend({
-      hide : false
+      hide : false,
+      opacity : 1
     }, args);
 
     this.each(function(index) {
@@ -89,9 +91,13 @@
           url: $this.attr('src'),
           success: $.proxy(function(image) {
               $can = $(image).getGSCanvas();
-              $can
-                .addClass('gsCanvas')
-                .appendTo($gsWrapper);
+
+              $can.css({
+                'opacity' : $options.opacity,
+                'display' : ($options.hide) ? 'none' : 'block'
+              });
+
+              $can.appendTo($gsWrapper);
             }, $gsWrapper),
           error: function(xhr, text_status) {
             // do nothing
@@ -99,9 +105,13 @@
         });
       } else {
         $can = $(this).getGSCanvas();
-        $can
-          .addClass('gsCanvas')
-          .appendTo($gsWrapper);
+
+        $can.css({
+          'opacity' : $options.opacity,
+          'display' : ($options.hide) ? 'none' : 'block'
+        });
+
+        $can.appendTo($gsWrapper);
       }
 
   });
