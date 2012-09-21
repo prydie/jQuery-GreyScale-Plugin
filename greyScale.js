@@ -128,30 +128,5 @@
   };
 })( jQuery );
 
-/*
- *
- *  jQuery $.getImageData Plugin 0.3
- *  http://www.maxnov.com/getimagedata
- *
- *  Written by Max Novakovic (http://www.maxnov.com/)
- *  Date: Thu Jan 13 2011
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- *  Includes jQuery JSONP Core Plugin 2.1.4
- *  http://code.google.com/p/jquery-jsonp/
- *  Copyright 2010, Julian Aubourg
- *  Released under the MIT License.
- *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *
- *  Copyright 2011, Max Novakovic
- *  Dual licensed under the MIT or GPL Version 2 licenses.
- *  http://www.maxnov.com/getimagedata/#license
- *
- */
-(function(c,g){function n(){}function o(a){s=[a]}function e(a,j,k){return a&&a.apply(j.context||j,k)}function h(a){function j(b){!l++&&g(function(){p();q&&(t[d]={s:[b]});z&&(b=z.apply(a,[b]));e(a.success,a,[b,A]);e(B,a,[a,A])},0)}function k(b){!l++&&g(function(){p();q&&b!=C&&(t[d]=b);e(a.error,a,[a,b]);e(B,a,[a,b])},0)}a=c.extend({},D,a);var B=a.complete,z=a.dataFilter,E=a.callbackParameter,F=a.callback,R=a.cache,q=a.pageCache,G=a.charset,d=a.url,f=a.data,H=a.timeout,r,l=0,p=n;a.abort=function(){!l++&&
-p()};if(e(a.beforeSend,a,[a])===false||l)return a;d=d||u;f=f?typeof f=="string"?f:c.param(f,a.traditional):u;d+=f?(/\?/.test(d)?"&":"?")+f:u;E&&(d+=(/\?/.test(d)?"&":"?")+encodeURIComponent(E)+"=?");!R&&!q&&(d+=(/\?/.test(d)?"&":"?")+"_"+(new Date).getTime()+"=");d=d.replace(/=\?(&|$)/,"="+F+"$1");q&&(r=t[d])?r.s?j(r.s[0]):k(r):g(function(b,m,v){if(!l){v=H>0&&g(function(){k(C)},H);p=function(){v&&clearTimeout(v);b[I]=b[w]=b[J]=b[x]=null;i[K](b);m&&i[K](m)};window[F]=o;b=c(L)[0];b.id=M+S++;if(G)b[T]=
-G;var O=function(y){(b[w]||n)();y=s;s=undefined;y?j(y[0]):k(N)};if(P.msie){b.event=w;b.htmlFor=b.id;b[I]=function(){/loaded|complete/.test(b.readyState)&&O()}}else{b[x]=b[J]=O;P.opera?(m=c(L)[0]).text="jQuery('#"+b.id+"')[0]."+x+"()":b[Q]=Q}b.src=d;i.insertBefore(b,i.firstChild);m&&i.insertBefore(m,i.firstChild)}},0);return a}var Q="async",T="charset",u="",N="error",M="_jqjsp",w="onclick",x="on"+N,J="onload",I="onreadystatechange",K="removeChild",L="<script/>",A="success",C="timeout",P=c.browser,
-i=c("head")[0]||document.documentElement,t={},S=0,s,D={callback:M,url:location.href};h.setup=function(a){c.extend(D,a)};c.jsonp=h})(jQuery,setTimeout);
-(function(c){c.getImageData=function(a){var f=/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;if(a.url){var g=location.protocol==="https:",e="";e=a.server&&f.test(a.server)&&a.server.indexOf("https:")&&(g||a.url.indexOf("https:"))?a.server:"//img-to-json.appspot.com/?callback=?";c.jsonp({url:e,data:{url:escape(a.url)},dataType:"jsonp",timeout:1E4,success:function(b){var d=new Image;c(d).load(function(){this.width=b.width;this.height=b.height;typeof a.success==typeof Function&& a.success(this)}).attr("src",b.data)},error:function(b,d){typeof a.error==typeof Function&&a.error(b,d)}})}else typeof a.error==typeof Function&&a.error(null,"no_url")}})(jQuery);
+// $.getImageData() (https://github.com/betamax/getImageData)
+(function(X,U){function y(){}function c(d){R=[d]}function V(d,g,f){return d&&d.apply(g.context||g,f)}function s(B){function u(J){!q++&&U(function(){p();l&&(G[x]={s:[J]});z&&(J=z.apply(B,[J]));V(B.success,B,[J,k]);V(g,B,[B,k])},0)}function t(J){!q++&&U(function(){p();l&&J!=N&&(G[x]=J);V(B.error,B,[B,J]);V(g,B,[B,J])},0)}B=X.extend({},E,B);var g=B.complete,z=B.dataFilter,d=B.callbackParameter,I=B.callback,r=B.cache,l=B.pageCache,H=B.charset,x=B.url,w=B.data,C=B.timeout,f,q=0,p=y;B.abort=function(){!q++&&p()};if(V(B.beforeSend,B,[B])===false||q){return B}x=x||F;w=w?typeof w=="string"?w:X.param(w,B.traditional):F;x+=w?(/\?/.test(x)?"&":"?")+w:F;d&&(x+=(/\?/.test(x)?"&":"?")+encodeURIComponent(d)+"=?");!r&&!l&&(x+=(/\?/.test(x)?"&":"?")+"_"+(new Date).getTime()+"=");x=x.replace(/=\?(&|$)/,"="+I+"$1");l&&(f=G[x])?f.s?u(f.s[0]):t(f):U(function(J,K,L){if(!q){L=C>0&&U(function(){t(N)},C);p=function(){L&&clearTimeout(L);J[v]=J[D]=J[o]=J[A]=null;W[n](J);K&&W[n](K)};window[I]=c;J=X(m)[0];J.id=j+b++;if(H){J[a]=H}var M=function(O){(J[D]||y)();O=R;R=undefined;O?u(O[0]):t(i)};if(h.msie){J.event=D;J.htmlFor=J.id;J[v]=function(){/loaded|complete/.test(J.readyState)&&M()}}else{J[A]=J[o]=M;h.opera?(K=X(m)[0]).text="jQuery('#"+J.id+"')[0]."+A+"()":J[e]=e}J.src=x;W.insertBefore(J,W.firstChild);K&&W.insertBefore(K,W.firstChild)}},0);return B}var e="async",a="charset",F="",i="error",j="_jqjsp",D="onclick",A="on"+i,o="onload",v="onreadystatechange",n="removeChild",m="<script/>",k="success",N="timeout",h=X.browser,W=X("head")[0]||document.documentElement,G={},b=0,R,E={callback:j,url:location.href};s.setup=function(d){X.extend(E,d)};X.jsonp=s})(jQuery,setTimeout);(function(a){a.getImageData=function(c){var d=/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;if(c.url){var e=location.protocol==="https:";var b="";if(c.server&&d.test(c.server)&&(c.server.indexOf("https:")&&(e||c.url.indexOf("https:")))){b=c.server}else{b="//img-to-json.appspot.com/"}b+="?callback=?";a.jsonp({url:b,data:{url:escape(c.url)},dataType:"jsonp",timeout:10000,success:function(h,f){var g=new Image();a(g).load(function(){this.width=h.width;this.height=h.height;if(typeof(c.success)==typeof(Function)){c.success(this)}}).attr("src",h.data)},error:function(g,f){if(typeof(c.error)==typeof(Function)){c.error(g,f)}}})}else{if(typeof(c.error)==typeof(Function)){c.error(null,"no_url")}}}})(jQuery);
