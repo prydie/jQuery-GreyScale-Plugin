@@ -23,15 +23,25 @@
 
 (function($){
 
-  $.fn.greyScale = function(args) {
-    $options = $.extend({
-      hide : false
-    }, args);
+  /**
+   * Returns <canvas> elements containing greyscale version of images in the selector
+   */
+  $.fn.getGSCanvas = function() {
+    $ret = $();
+    list = [];
+    this.each(function(index) {
+      $this = $(this);
 
-    function greyScale(image, width, height) {
+      if (! $this.is('img'))
+        return true;
+
+      var width = $this.width();
+      var height = $this.height();
+      var image = $this[0];
+
       $can = $('<canvas>')
         .css({
-          'display' : $options.hide ? 'none' : 'block',
+          'display' : 'block',
           'left' : '0',
           'position' : 'absolute',
           'top' : '0'
@@ -39,8 +49,7 @@
         .attr({
           'width': width,
           'height': height
-        })
-        .addClass('gsCanvas');
+        });
 
       ctx = $can[0].getContext('2d');
       ctx.drawImage(image, 0, 0, width, height);
@@ -53,34 +62,46 @@
         px[i] = px[i+1] = px[i+2] = grey;
       }
       ctx.putImageData(imageData, 0, 0);
-      return $can;
-    }
+      list += $can;
+      $ret = $ret.add($can);
+    });
+    return $ret;
+  };
+
+  $.fn.greyScale = function(args) {
+    $options = $.extend({
+      hide : false
+    }, args);
 
     this.each(function(index) {
       $this = $(this);
-      $this.wrap('<div class="gsWrapper">');
-
-      $gsWrapper = $this.parent();
-      $gsWrapper.css({
-        'position' : 'relative',
-        'display' : 'inline-block'
-      });
+      $gsWrapper = $this
+        .wrap('<div class="gsWrapper">')
+        .parent()
+        .css({
+          'position' : 'relative',
+          'display' : 'inline-block'
+        });
 
       if (window.location.hostname !== this.src.split('/')[2]) {
         // If the image is on a different domain proxy the request
        $.getImageData({
           url: $this.attr('src'),
           success: $.proxy(function(image) {
-              $can = greyScale(image, image.width, image.height);
-              $can.appendTo($gsWrapper);
+              $can = $(image).getGSCanvas();
+              $can
+                .addClass('gsCanvas')
+                .appendTo($gsWrapper);
             }, $gsWrapper),
           error: function(xhr, text_status) {
             // do nothing
           }
         });
       } else {
-        $can = greyScale($(this)[0], $(this).width(), $(this).height());
-        $can.appendTo($gsWrapper);
+        $can = $(this).getGSCanvas();
+        $can
+          .addClass('gsCanvas')
+          .appendTo($gsWrapper);
       }
 
   });
