@@ -65,7 +65,6 @@
         px[i] = px[i+1] = px[i+2] = grey;
       }
       ctx.putImageData(imageData, 0, 0);
-      list += $can;
       $ret = $ret.add($can);
     });
 
