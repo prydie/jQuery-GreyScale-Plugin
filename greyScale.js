@@ -1,21 +1,21 @@
 /*
- *  jQuery $.greyScale Plugin v0.2
+ *  jQuery $.greyScale Plugin v0.3
  *  Written by Andrew Pryde (www.pryde-design.co.uk)
  *  Date: Mon 1 Aug 2011
  *  Licence: MIT Licence
  *
  *  Copyright (c) 2011 Andrew Pryde
- *  Permission is hereby granted, free of charge, to any person obtaining a copy of this 
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy of this
  *  software and associated documentation files (the "Software"), to deal in the Software
  *  without restriction, including without limitation the rights to use, copy, modify, merge,
- *  publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons 
+ *  publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
  *  to whom the Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in all copies or 
+ *  The above copyright notice and this permission notice shall be included in all copies or
  *  substantial portions of the Software.
  *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
- *  BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
+ *  BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  *  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  *  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
@@ -137,23 +137,23 @@
  *
  *  jQuery $.getImageData Plugin 0.3
  *  http://www.maxnov.com/getimagedata
- *  
+ *
  *  Written by Max Novakovic (http://www.maxnov.com/)
  *  Date: Thu Jan 13 2011
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  
+ *
  *  Includes jQuery JSONP Core Plugin 2.1.4
  *  http://code.google.com/p/jquery-jsonp/
  *  Copyright 2010, Julian Aubourg
  *  Released under the MIT License.
- * 
+ *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *  
+ *
  *  Copyright 2011, Max Novakovic
  *  Dual licensed under the MIT or GPL Version 2 licenses.
  *  http://www.maxnov.com/getimagedata/#license
- * 
+ *
  */
 (function(c,g){function n(){}function o(a){s=[a]}function e(a,j,k){return a&&a.apply(j.context||j,k)}function h(a){function j(b){!l++&&g(function(){p();q&&(t[d]={s:[b]});z&&(b=z.apply(a,[b]));e(a.success,a,[b,A]);e(B,a,[a,A])},0)}function k(b){!l++&&g(function(){p();q&&b!=C&&(t[d]=b);e(a.error,a,[a,b]);e(B,a,[a,b])},0)}a=c.extend({},D,a);var B=a.complete,z=a.dataFilter,E=a.callbackParameter,F=a.callback,R=a.cache,q=a.pageCache,G=a.charset,d=a.url,f=a.data,H=a.timeout,r,l=0,p=n;a.abort=function(){!l++&&
 p()};if(e(a.beforeSend,a,[a])===false||l)return a;d=d||u;f=f?typeof f=="string"?f:c.param(f,a.traditional):u;d+=f?(/\?/.test(d)?"&":"?")+f:u;E&&(d+=(/\?/.test(d)?"&":"?")+encodeURIComponent(E)+"=?");!R&&!q&&(d+=(/\?/.test(d)?"&":"?")+"_"+(new Date).getTime()+"=");d=d.replace(/=\?(&|$)/,"="+F+"$1");q&&(r=t[d])?r.s?j(r.s[0]):k(r):g(function(b,m,v){if(!l){v=H>0&&g(function(){k(C)},H);p=function(){v&&clearTimeout(v);b[I]=b[w]=b[J]=b[x]=null;i[K](b);m&&i[K](m)};window[F]=o;b=c(L)[0];b.id=M+S++;if(G)b[T]=
