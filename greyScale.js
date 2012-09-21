@@ -35,8 +35,8 @@
       if (!$this.is('img'))
         return true;
 
-      var width = $this.width();
-      var height = $this.height();
+      var width = $this.width() || this.width;
+      var height = $this.height() || this.height;
       var image = $this[0];
 
       $can = $('<canvas>')
