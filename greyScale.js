@@ -53,7 +53,7 @@
       ctx.putImageData(imageData, 0, 0);
       return can;
     }
-    if ($.browser.msie) {
+    if (navigator.userAgent.match(/msie/i) && navigator.userAgent.match(/6/)) {
       // IE doesn't support Canvas so use it's horrible filter syntax instead
       this.each(function(){
         var greyscale = $options.reverse ? 0 : 1;
