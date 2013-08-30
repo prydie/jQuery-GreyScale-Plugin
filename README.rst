@@ -1,3 +1,7 @@
+================
+jquery GreyScale
+================
+
 A jQuery plugin for greyscaleing images on the fly and then colouring them on hover.
 
 See example.html for a usage.
