@@ -1,3 +1,12 @@
+DEPRECIATED
+-----------
+This plugin is no longer under development the following CSS (in modern browsers) fulfils the same purpose with far greater efficiency.
+
+.. code:: css
+
+  img {
+    filter: grayscale(100%);
+  }
 ================
 jQuery GreyScale
 ================
